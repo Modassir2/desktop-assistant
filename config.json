@@ -1,11 +1,11 @@
 {
     "base_url": "http://127.0.0.1:8002",
     "api_key": "Moda",
-    "image_tokens": 1032,
+    "image_tokens": 1105,
     "max_tokens": 8192,
     "last_n_images": 3,
-    "width": 1366,
-    "height": 768,
-    "dev_mode": true,
-    "monitor": 2
+    "width": 1920,
+    "height": 1080,
+    "dev_mode": false,
+    "monitor": 1
 }
