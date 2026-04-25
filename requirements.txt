@@ -3,3 +3,4 @@ mss
 colorama
 openai
 pywin32
+tiktoken
