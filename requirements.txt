@@ -1,0 +1,5 @@
+pyautogui
+mss
+colorama
+openai
+pywin32
