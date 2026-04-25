@@ -41,12 +41,12 @@ A lightweight, terminal-based (CUI) desktop assistant designed for speed and eff
    * `base_url`
      This sets the base url to look for the OpenAI endpoint, some examples are:
      Google Gemini (via AI Studio): "https://generativelanguage.googleapis.com/v1beta/openai/"
-     LM Studio: "http://localhost:1234/v1" (or the configured port)
-     Groq: "https://api.groq.com/openai/v1"
-     OpenRouter: "https://openrouter.ai/api/v1"
-     xAI (Grok): "https://api.x.ai/v1"
-     Ollama: "http://localhost:11434/v1"
-     OpenAI: Leave empty "" or "https://api.openai.com/v1"
+     - LM Studio: "http://localhost:1234/v1" (or the configured port)
+     - Groq: "https://api.groq.com/openai/v1"
+     - OpenRouter: "https://openrouter.ai/api/v1"
+     - xAI (Grok): "https://api.x.ai/v1"
+     - Ollama: "http://localhost:11434/v1"
+     - OpenAI: Leave empty "" or "https://api.openai.com/v1"
    * `api_key`
      Set the api key for paid AI platforms. For local LLMs usually out any placeholder text as it is not used.
    * `image_tokens`
