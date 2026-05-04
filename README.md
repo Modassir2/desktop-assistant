@@ -1,9 +1,9 @@
 # 💻 Desktop Assistant Agent
 
-A lightweight, terminal-based (CUI) desktop assistant designed for speed and efficiency. It features a beautifully formatted command-line interface and runs completely locally using LM Studio.
+A lightweight, terminal-based (TUI) desktop assistant designed for speed and efficiency. It features a beautifully formatted command-line interface and runs completely locally using LM Studio.
 
 ### ✨ Key Features
-* 📟 **Rich Terminal UI:** Clean, pretty-printed console output for easy reading and structured data display. (GUI implementation coming soon)
+* 📟 **Rich Terminal UI:** Clean, pretty-printed console output for easy reading and structured data display.
 * 🏠 **100% Local AI Support:** Tested and optimized in local OpenAI endpoints (LM Studio, ollama, llama.cpp/llama-server.exe).
 * ⌨️ **Keyboard Driven:** Quick text-based commands without leaving your terminal environment.
 * ⚡ **Lightweight:** No heavy GUI overhead, running directly in your shell with minimal system usage.
@@ -75,7 +75,7 @@ A lightweight, terminal-based (CUI) desktop assistant designed for speed and eff
 
 ### 🛠️ Tech Stack
 * **Language:** Python
-* **Libraries used for Pretty Printing:** Colorama
+* **Libraries used for Pretty Printing:** textual, rich, colorma
 
 ### 📜 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
