@@ -4,14 +4,12 @@ import mss
 import colorama
 import base64
 import time
-import pyperclip
 from openai import OpenAI
 import utils
-import re
 import win32gui
 import win32con
-import os
-import threading
+import cv2
+import numpy as np
 
 colorama.init(autoreset=True)
 GREY = colorama.Fore.LIGHTBLACK_EX
@@ -48,6 +46,25 @@ def get_screenshot(mon:int=mon):
         base64img=base64.b64encode(img.read()).decode('utf-8')
     return f"data:image/jpeg;base64,{base64img}"
 
+def annonated_cursor(image_url:str=get_screenshot(),coords:list=pyautogui.position()):
+    image_b64=image_url[23::]
+    x,y=coords
+    #Decode base64 string to OpenCV image
+    img_data = base64.b64decode(image_b64)
+    nparr = np.frombuffer(img_data, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    #Crosshair parameters
+    color = (0, 0, 255) #Moda dont forget -> BGR not RGB
+    thickness = 2
+    size = 12
+    #Draw horizontal and vertical lines (+)
+    cv2.line(img, (x - size, y), (x + size, y), color, thickness)
+    cv2.line(img, (x, y - size), (x, y + size), color, thickness)
+    # 4. Re-encode image back to base64
+    _, buffer = cv2.imencode('.png', img)
+    base64img = base64.b64encode(buffer).decode('utf-8')
+    return f"data:image/jpeg;base64,{base64img}"
+
 def _get_open_apps_raw():
     windows = []
     def callback(hwnd, _):
@@ -73,7 +90,33 @@ def focus_window(app_name):
             return True
     return False
 
+#DEBUGGING FUNCTIONS
+def display_img(base64_image: str):
+    img_data = base64.b64decode(base64_image)
+    nparr = np.frombuffer(img_data, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    cv2.imshow("Test Crosshair Placement", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
 #FUNCTIONS FOR MODEL
+def check_coordinates(coordinates:list,place:str):
+    try:
+        x,y=coordinates
+    except ValueError as e:
+        return [{'role':"tool","name":"left_click","content":f"Invalid argument passed: {e}"}]
+    x_pixel=int((x/1000)*w)
+    y_pixel=int((y/1000)*h)
+    image_url=annonated_cursor(coords=[x_pixel,y_pixel])
+    return [{
+        "role":"tool",
+        "name":"check_coordinates",
+        "content":[
+            {"type":"text","text":f"The given coordinates corresponds to the RED + marker on the image."},
+            {"type":"image_url","image_url":{"url":image_url}}
+        ]
+    }]
+
 def l_click(coordinates:list,reason:str="Not Specified",wait:int=3):
     try:
         x,y=coordinates
@@ -126,7 +169,7 @@ def view_screen():
         ]
     }]
 
-def type_text(text,press_enter:bool=False,wait:int=2,reason:str="Not Specified"):
+def type_text(text:str,press_enter:bool=False,wait:int=2,reason:str="Not Specified"):
     pyautogui.write(text)
     time.sleep(1)
     if press_enter:
@@ -193,7 +236,7 @@ def scroll(coordinates:list,reason:str=None,amount:int=6,direction_down:bool=Tru
     else:
         pyautogui.scroll(amount)
     time.sleep(wait)
-    image_url=get_screenshot()
+    image_url=annonated_cursor()
     return [
         {
             "role":"tool",
@@ -248,6 +291,7 @@ tool_map = {
     "view_screen": view_screen,
     "type_text": type_text,
     "press_keyboard_buttons":press_keyboard_buttons,
+    "check_coordinates":check_coordinates,
     "left_click":l_click,
     "right_click":r_click,
     "scroll":scroll,
@@ -255,3 +299,8 @@ tool_map = {
     "remove_memory":remove_memory,
     "wait":wait
 }
+
+if __name__=="__main__":
+    time.sleep(3)
+    display_img(base64_image=annonated_cursor())
+    exit()

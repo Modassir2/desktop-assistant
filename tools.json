@@ -13,6 +13,21 @@
     {
         "type":"function",
         "function":{
+            "name":"check_coordinates",
+            "description":"Check where a coordinates point to on screenshot.",
+            "parameters":{
+                "type":"object",
+                "peroperties":{
+                    "coordinates":{"type":"array","description":"The coordniates check in [x,y] format."},
+                    "place":{"type":"string","description":"The expected button/element name where the coordinates should point."}
+                },
+                "required":["coordinates","place"]
+            }
+        }
+    },
+    {
+        "type":"function",
+        "function":{
             "name":"left_click",
             "description":"Left Click on anywhere on screen by its coordinates.",
             "parameters":{
@@ -51,8 +66,8 @@
                 "type":"object",
                 "properties":{
                     "text":{"type":"string","description":"The text to type in the textbox."},
+                    "press_enter":{"type":"boolean","description":"Wheather to press enter key after typing the text. Default = False."},
                     "wait":{"type":"integer","description":"The time to wait after typing text. Default = 2 seconds"},
-                    "press_enter":{"type":"boolean","description":"Wheather to press enter key after typing the text. Default is False."},
                     "reason":{"type":"string","description":"The reason for typing the text."}
                 },
                 "required":["text","reason"]
@@ -73,20 +88,6 @@
                     "reason":{"type":"string","description":"The reason/function for executing the shortcut."}
                 },
                 "required":["shortcut","app_name","reason"]
-            }
-        }
-    },
-    {
-        "type":"function",
-        "function":{
-            "name":"get_permission",
-            "description":"Ask user for permission for serious actions like deletion and closing of apps.",
-            "parameters":{
-                "type":"object",
-                "properties":{
-                    "question":{"type":"string","description":"Ask user for permission and explain why you need it."}
-                },
-                "required":["question"]
             }
         }
     },

@@ -1,7 +1,7 @@
 {
     "base_url": "http://127.0.0.1:8002",
     "api_key": "Moda",
-    "image_tokens": 1105,
+    "image_tokens": 1032,
     "max_tokens": 8192,
     "last_n_images": 3,
     "width": 1920,

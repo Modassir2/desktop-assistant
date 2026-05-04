@@ -11,7 +11,7 @@ def load_config(name:str='config.json'):
 config=load_config()
 MAX_TOKENS = (config.get("max_tokens") - 2500) if config.get("max_tokens") else 6000
 IMAGE_TOKENS = config.get("image_tokens") if config.get("image_tokens") else 1032
-n = config.get("last_n_image") if config.get("last_n_image") else 1
+n = config.get("last_n_images") if config.get("last_n_images") else 1
 TOKEN_ENCODER = tiktoken.get_encoding("cl100k_base")
 
 def load_system_prompt(name:str='system_prompt'):
