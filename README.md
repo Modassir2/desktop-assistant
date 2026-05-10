@@ -12,16 +12,16 @@ A lightweight, terminal-based (TUI) desktop assistant designed for speed and eff
 
 #### Model Selection
 * For Local LLM:
-  There are many open source LLMs that can be used. While selecting a LLM for this assistant look for its UI Grounding benchmarks (like screenspot, osworld) to be 75%+ for best results
-  If your own a low end harware then the best model for you is the `Qwen3vl 8b` with Q8_0 quantization. Get a Q8_0 quantized mmproj (from Hugginface `prithivMLmods/Qwen3-VL-8B-Instruct-abliterated-v2-GGUF`). Then get `ggml-org/llama.cpp` release best for your GPU or mac. Run the following code in terminal in the folder with llama.cpp, Qwen3vl 8b Q8_0 and mmproj Q8_0 file-
+  There are many open source LLMs that can be used. While selecting a LLM for this assistant look for its UI Grounding benchmarks (like screenspot, osworld) to be 75%+ for best results. I would recommend pick the largest model from the `Qwen3vl` series that can fit on your computer, but don't go lower than 4b!
+  If your own a low end harware then the best model for you is the `Qwen3vl 4b` with Q4_K_M quantization. Get a Q8_0 quantized mmproj and not the BF16. ( Hugginface `Qwen/Qwen3-VL-4B-Instruct-GGUF`). Then get `ggml-org/llama.cpp` release best for your GPU or mac. Run the following code in terminal in the folder with llama.cpp, Qwen3vl 8b Q8_0 and mmproj Q8_0 file-
   ```bash
-  .\llama.cpp\llama-server.exe --model .\Qwen3-VL-8B-Instruct-Q8_0.gguf --mmproj .\mmproj-q8-qwen3vl8b.gguf --ctx-size 8192 --host 0.0.0.0 --port 8002 --parallel 1 --cache-ram 1024 -ctk q8_0 -ctv q8_0 --no-mmap
+  .\llama.cpp-b8931\llama-server.exe --model .\Qwen3-VL-4B-Instruct-Q4_K_M.gguf --mmproj .\mmproj-Qwen3-VL-4B-Instruct-q8_0.gguf --flash-attn on --threads <your-cpu-core-count> --ctx-size 8192 --host 0.0.0.0 --port 8002 --parallel 1 -ctv q8_0 -ctk q8_0 --threads-batch 2x<cpu_core_count>
   ```
   Note: Add `--flash-attn on` if you have nvidia GPU for better performance
   Now the local server will be running at "http://127.0.0.1:8002" and requires no api key.
 
 * For Cloud LLM:
-  This has been tested to work on the lowest 8b parameter model, thus almost all closed source AI models will work given that it supports images and tool calling/agentic tasks.
+  This has been tested to work on the lowest 4b parameter model, thus almost all closed source AI models will work given that it supports images and tool calling/agentic tasks and is good enough at UI grounding.
 
 #### Installation
 1. Clone the repository:
